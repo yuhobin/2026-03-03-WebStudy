@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="table.css">
+<style type="text/css">
+	h3 {
+		text-align: center;
+	}
+	table {
+		margin: 0px auto;
+	}
+</style>
+</head>
+<body>
+	<!-- rowspan -->
+	<table id="table_content" width=800>
+		<tbody>
+			<tr>
+				<td width="30%" rowspan="6">
+				<img src="https://www.menupan.com/restaurant/restimg/002/zzmenuimg/f10118224_z.jpg"></td>
+				<td colspan="2">미스터피자(Mr.Pizza) 여의도점</td>
+			</tr>
+			<tr>
+				<td width="20%">주소</td>
+				<td width="50%">서울 영등포구 의사당대로 108</td>
+			</tr>
+			<tr>
+				<td width="20%">전화</td>
+				<td width="50%">(02) 784-0005</td>
+			</tr>
+			<tr>
+				<td width="20%">음식종류</td>
+				<td width="50%">패스트푸드-피자</td>
+			</tr>
+			<tr>
+				<td width="20%">주차</td>
+				<td width="50%">30대, 주차방법: 무료, 주차장소: 전용</td>
+			</tr>
+			<tr>
+				<td width="20%">가격대</td>
+				<td width="50%">20,000 ~ 30,000원</td>
+			</tr>
+		</tbody>
+	</table>
+	<table id="table_content" width=800>
+		<tr>
+			<td><pre style="white-space: pre=wrap;"> 순수 국내 브랜드 피자 전문점 '미스터피자(Mr.Pizza) 여의도점'.
+
+한국인이 공감하는 '기름기 없이 담백한 맛'의 강점을 살려 특히 여성 고객 중심의 제품개발과 마케팅을 펼치고 있는 '미스터피자(Mr.Pizza)'.
+
+여의도역 앞에 위치한 '미스터피자(Mr.Pizza) 여의도점'은 국내의 수많은 미스터피자(Mr.Pizza) 지점 중에서도 청결하고 친절한 모습이 특징인 곳이다.
+
+다양한 피자 메뉴를 제공함은 물론 피자 뷔페 또한 운영하여 입맛대로 골라먹는 신개념 피자를 선보이고 있다.
+			</td>
+		</tr>
+	</table>
+	<table>
+		<tr>
+			<td>
+				<div id="map" style="width:800px;height:350px;"></div>
+				<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cc3f81d004109e8449e421a88c379350&libraries=services"></script>
+<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };  
+
+// 지도를 생성합니다    
+var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+// 주소-좌표 변환 객체를 생성합니다
+var geocoder = new kakao.maps.services.Geocoder();
+
+// 주소로 좌표를 검색합니다
+geocoder.addressSearch('서울 영등포구 의사당대로 108', function(result, status) {
+
+    // 정상적으로 검색이 완료됐으면 
+     if (status === kakao.maps.services.Status.OK) {
+
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new kakao.maps.Marker({
+            map: map,
+            position: coords
+        });
+
+        // 인포윈도우로 장소에 대한 설명을 표시합니다
+        var infowindow = new kakao.maps.InfoWindow({
+            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+        });
+        infowindow.open(map, marker);
+
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);
+    } 
+});    
+</script>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

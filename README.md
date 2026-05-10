@@ -1,6 +1,5 @@
-# 🚀 Java Full-Stack 웹 HTML/CSS/JavaScript 학습 
-> Java 풀스택 개발자 과정의 세번째 단계, 웹 학습 저장소입니다.  
-학습하며 익힌 웹 지식을 기록합니다.
+# 🚀 Java Full-Stack Web Development
+> **Java 풀스택 개발자 양성 과정 (Step 03)** > 정적인 마크업(HTML/CSS)부터 동적인 웹 애플리케이션(JS/Servlet)까지, 웹 개발의 전 과정을 학습하고 기록하는 저장소입니다.
 
 ## 📅 학습 타임라인
 | 날짜 | 주요 주제 | 요약 | 상세 내용 |
@@ -23,9 +22,21 @@
 
 ---
 ## 🛠️ 주요 사용 기술
-- **Database:** Oracle Database 21c Express Edition (XE)
-- **Tools:**  SQL Developer (24.3.1), DBeaver (26.0.2), SQL Plus
+
+### 🌐 Frontend
+- **Languages:** HTML5, CSS3, JavaScript (ES6+)
+- **Tools:** VS Code (학습 예정)
+
+### ⚙️ Backend & Server
 - **Language:** Java (JDK 21)
-- **IDE:** Eclipse IDE
-- **VCS:** Git / GitHub
-- **Connectivity:** JDBC (ojdbc11, ojdbc8)
+- **Server:** Apache Tomcat 11.0.20
+- **IDE:** Eclipse IDE (Main Environment)
+- **Libraries:** Servlet API, MyBatis 3.5.17, Lombok, Slf4j
+
+### 💾 Database & Connectivity
+- **DB:** Oracle Database 21c Express Edition (XE)
+- **Tools:** SQL Developer, DBeaver
+- **Connectivity:** JDBC (ojdbc8)
+
+### 🚀 VCS
+- **Git / GitHub**

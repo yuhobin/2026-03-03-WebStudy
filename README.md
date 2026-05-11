@@ -24,7 +24,7 @@
 ## 🛠️ 주요 사용 기술
 
 ### 🌐 Frontend
-- **Languages:** HTML5, CSS3, JavaScript (ES6+)
+- **Languages:** HTML5, CSS3, JavaScript (ES6.0)
 - **Tools:** VS Code (학습 예정)
 
 ### ⚙️ Backend & Server

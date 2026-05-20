@@ -38,7 +38,7 @@ public class GoodsDAO {
 			e.printStackTrace();
 		}
 	}
-	// 싱글턴 패턴 => new를 사용하지 않고 재사용이 가능 => 메모리 절역
+	// 싱글턴 패턴 => new를 사용하지 않고 재사용이 가능 => 메모리 절약
 	public static GoodsDAO newInstance() {
 		if(dao==null)
 				dao=new GoodsDAO();

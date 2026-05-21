@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="com.sist.dao.*"%>
+	pageEncoding="UTF-8" import="java.util.*, com.sist.dao.*"%>
+
 <%--
 	클래스가 아니고 메소드 영역이다
 	

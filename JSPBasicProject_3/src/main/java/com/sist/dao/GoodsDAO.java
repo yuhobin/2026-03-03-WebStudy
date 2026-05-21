@@ -91,11 +91,9 @@ public class GoodsDAO {
 			String sql="SELECT CEIL(COUNT(*)/12.0) FROM goods_all";
 			ps=conn.prepareStatement(sql);
 			ResultSet rs=ps.executeQuery();
-			if(rs.next()) {
-	            total = rs.getInt(1); // 1번째 컬럼(CEIL 결과값)을 읽어 total에 저장
-	        }
-	        
-	        rs.close();
+			rs.next();
+			total=rs.getInt(1);
+			rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -110,6 +108,7 @@ public class GoodsDAO {
 		private String goods_name, goods_sub, goods_price, goods_first_price, goods_delivery, goods_poster;
 	 * 
 	 */
+	// 상품 상세보기
 	public GoodsVO goodsDetailData(int no) {
 		GoodsVO vo=new GoodsVO();
 		try {

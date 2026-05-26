@@ -4,7 +4,7 @@
 ## 📅 학습 타임라인
 | 날짜 | 주요 주제 | 요약 | 상세 내용 |
 |:---:|:---|:---|:---:|
-| 26.05.06 | <도서관리프로그램 프로젝트 마무리 ERD 제작 및 PPT 제작> | 도서관리프로그램을 완성하고 설계 단계에서 했던 ERD를 수정하고 다시 제작, 마지막으로 제출용 PPT를 제작 | [ppt보러가기](./MiniProject/LibraryKiosk.pdf.md )  [repository 보러가기](https://github.com/library-kiosk/2026-java-project) |
+| 26.05.06 | <도서관리프로그램 프로젝트 마무리 ERD 제작 및 PPT 제작> | 도서관리프로그램을 완성하고 설계 단계에서 했던 ERD를 수정하고 다시 제작, 마지막으로 제출용 PPT를 제작 | [ppt보러가기](./MiniProject/LibraryKiosk.pdf.md )  [repository보러가기](https://github.com/library-kiosk/2026-java-project) |
 | 26.05.07 | HTML5 환경 세팅 및 기본태그 학습 | HTML에 필요한 라이브러리를 다운받고 문서구조와 글자 태그, 문자제어 태그에 대해 학습 | [보러가기](./docs/2026-05-07.md ) |
 | 26.05.08 | HTML table, input 태그| table, input 태그에 대해 종류와 구조를 중심으로 학습, 웹서버 오류의 종류 학습 | [보러가기](./docs/2026-05-08.md ) |
 | 26.05.11 | HTML input 태그 활용, CSS 선택자 | HTML로 회원가입 폼을 만들어 보며 input태그를 익힘, CSS의 핵심 선택자 찾기  | [보러가기](./docs/2026-05-11.md ) |
@@ -17,7 +17,7 @@
 | 26.05.20 | JSP 내장속성 | JSP의 내장 속성 중 request와 response에 대해 알아보았다| [보러가기](./docs/2026-05-20.md ) |
 | 26.05.21 | JSP_Cookie & Session | Cookie와 Session을 비교하고 활용을 이해. 추가로 사이트 템플릿하고 <jsp:include> 활용하여 사이트 조립해보기| [보러가기](./docs/2026-05-21.md ) |
 | 26.05.22 | Cookie&FileUpload | Cookie 활용 중 발생한 에러 디버깅하여 해결하기 | [보러가기](./docs/2026-05-22.md ) |
-| 26.05.26 | | | [보러가기](./docs/.md ) |
+| 26.05.26 | EL / JSTL | JSP파일 안에서 최대한 Java코드를 없애는 EL/JSTL (Spring의 MVC구조로 가기위한 중간단계) | [보러가기](./docs/2026-05-26.md ) |
 | 26.05.27 | | | [보러가기](./docs/.md ) |
 | 26.05.06 ~ 26.05.?? |  학습자료 정리 | 웹 학습에 도움이 되는 자료 모음 | [보러가기](./WEB_정리자료) |
 

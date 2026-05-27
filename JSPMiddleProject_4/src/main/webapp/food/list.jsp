@@ -77,7 +77,7 @@ img {
 					if(startPage>1){
 						
 				%>
-					<li><a href="list.jap?page=<%=startPage-1%>">&laquo;</a></li>
+					<li><a href="list.jsp?page=<%=startPage-1%>">&laquo;</a></li>
 				<%
 					}
 				%>

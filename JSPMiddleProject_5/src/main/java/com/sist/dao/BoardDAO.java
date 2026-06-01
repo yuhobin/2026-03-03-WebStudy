@@ -71,14 +71,14 @@ public class BoardDAO {
 					+"OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 			// 3. 오라클 전송
 			ps=conn.prepareStatement(sql);
-			// 4. 실행전에 ?에 값 채운다 
+			// 4. 실행전에 ?에 값 채운다  // parameterType
 			ps.setInt(1, (page*ROW)-ROW);
 			ps.setInt(2, ROW);
 			// 5. 실행 요청 => 결과값 저장
 			ResultSet rs=ps.executeQuery();
 			// 6. => List에 담는다 => 브라우저로 전송 (JSP)
 			while(rs.next()) { // 메모리에 출력된 1번째 위치에 커서 이동
-				BoardVO vo =new BoardVO();
+				BoardVO vo =new BoardVO();	// resultType
 				vo.setNo(rs.getInt(1));
 				vo.setSubject(rs.getString(2));
 				vo.setName(rs.getString(3));

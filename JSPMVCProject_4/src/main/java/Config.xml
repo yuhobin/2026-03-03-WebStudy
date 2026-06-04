@@ -19,6 +19,7 @@
   	  -->
   	  <typeAliases>
   	  	<typeAlias type="com.sist.vo.DataBoardVO" alias="DataBoardVO"/>
+  	  	
   	  </typeAliases>
   	  <!-- 
   	  	2. Connection 설정 => getConnection() / disConnection()

@@ -9,13 +9,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.net.*;
 import java.io.*;
 // Spring / Spring-Boot 코드랑 구성이 비슷하게 코드 짜는 중
-// 클래스 구분자 (얘가 모델임을 컨트롤러 어노테이션으로 알려줌)
 /*
 	searchMainDailyBoxOffice.do
 	searchMainRealTicket.do
 	searchMainDailySeatTicket.do
 	https://www.kobis.or.kr/kobis/business/main/
 */
+//클래스 구분자 (얘가 모델임을 컨트롤러 어노테이션으로 알려줌)
 @Controller
 public class MovieModel {
 	private String baseURL="https://www.kobis.or.kr/kobis/business/main/";

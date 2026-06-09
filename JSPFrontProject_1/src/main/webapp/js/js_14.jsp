@@ -72,7 +72,7 @@ function movieDetail(mno){
 	let name=document.querySelector("#name")
 	name.textContent=m.movieNm
 	// $('#name').text(m.movieNm)  => Jquery
-	let dorector=document.querySelector("#director")
+	let director=document.querySelector("#director")
 	director.textContent=m.director
 	let genre=document.querySelector("#genre")
 	genre.textContent=m.genre

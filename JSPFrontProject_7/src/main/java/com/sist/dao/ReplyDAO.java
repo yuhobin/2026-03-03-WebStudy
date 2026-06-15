@@ -1,0 +1,50 @@
+package com.sist.dao;
+import java.util.*;
+
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+
+import com.sist.commons.*;
+import com.sist.vo.*;
+import com.sist.dao.*;
+public class ReplyDAO {
+	private static SqlSessionFactory ssf;
+	static {
+		ssf=CreateSqlSessionFactory.getSsf();
+	}
+	/*
+	 <select id="replyListData" resultType="ReplyVO" parameterType="int">
+	 	SELECT no, fno, id, name, msg, TO_CHAR(regdate,'yyyy-MM-dd hh24:mi:ss') as dbday
+	 	FROM reply
+	 	WHERE fno=#{fno}
+	 	OREDER BY no DESC 
+	</select>
+	*/
+	public static List<ReplyVO> replyListData(int fno) {
+		SqlSession session=ssf.openSession();
+		List<ReplyVO> list=session.selectList("replyListData",fno);
+		session.close();
+		return list;
+	}		
+	/*
+	<insert id="replyInsert" parameterType="ReplyVO">
+		<!--  
+			Sequence
+			order => 먼저 실행
+		 -->
+		<selectKey keyProperty="no" resultType="int"
+		 order="BEFORE"
+		>
+			SELECT NVL(MAX(no)+1,1) as no FROM reply	
+		</selectKey>
+		INSERT INTO reply VALUES(#{no}, #{fno}, #{id}, #{name}, #{msg}, SYSDATE)
+	</insert> 
+	 
+	 */
+	public static void replyInsert(ReplyVO vo) {
+		SqlSession session=ssf.openSession(true);
+		session.insert("replyInsert",vo);
+		session.close();
+	}	
+	
+}

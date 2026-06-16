@@ -34,7 +34,7 @@ $(function(){
 const search=async(fd)=>{
 	try {
 		// fetch => 비동기로 받는다 (Jquery에서는 Ajax)
-		const response = await fetch('https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=12&q='+fd+'&type=video&key=AIzaSyD9bvsSlLBG2atfaeIeY_LYrQvLUnFeioY')
+		const response = await fetch('https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=12&q='+fd+'&type=video&key=(유튜브키 삽입)')
 		const result=await response.json()
 		const movie=result.items
 		console.log(movie)

@@ -12,6 +12,37 @@
 	width: 800px;
 }
 </style>
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
+$(function(){
+	// 처음에 모든 수정창 숨기기
+	$('.ups').hide();
+	
+	$('.updateBtns').on('click',function(){
+		// 내가 누른 버튼의 댓글 번호(no) 가져오기
+		let no = $(this).attr("data-no");
+		
+		// 지금 누른 대상의 수정창(#up+no)을 찾음
+		let targetForm = $('#up' + no);
+		
+		// 현재 그 수정창이 눈에 보이는지 확인 (숨겨져 있으면 true, 보이고 있으면 false)
+		if(targetForm.is(':hidden')) {
+			// 열기 전에 다른 열려있는 수정창들을 싹 닫고 버튼도 '수정'으로 되돌림
+			$('.ups').hide();
+			$('.updateBtns').text("수정");
+			
+			// 내 것만 열고 글자를 '취소'로 변경
+			$(this).text("취소");
+			targetForm.show("slow");
+		}
+		else {
+			// 이미 열려있었다면 닫고 글자를 '수정'으로 변경
+			$(this).text("수정");
+			targetForm.hide();
+		}
+	});
+});
+</script>
 </head>
 <body>
 	<div class="container">
@@ -82,12 +113,30 @@
 										<td class="text-left">◑ ${rvo.name } (${rvo.dbday})</td>
 										<td class="text-right"><c:if
 												test="${rvo.id==sessionScope.id }">
-												<span class="btn btn-xs btn-success">수정</span>
-												<a href="#" class="btn btn-xs btn-info">삭제</a>
+												<span class="btn btn-xs btn-success updateBtns" data-no="${rvo.no}">수정</span>
+												<a href="../reply/delete.do?no=${rvo.no}&fno=${vo.no}" class="btn btn-xs btn-info">삭제</a>
 											</c:if></td>
 									</tr>
 									<tr>
 										<td style="white-space: pre-wrap;" colspan="2">${rvo.msg}</td>
+									</tr>
+									<tr style="display:none" class="ups" id="up${rvo.no}">
+										<td colspan="2">
+											<table class="table">
+												<form method=post action="../reply/update.do">
+													<tr>
+														<td>
+															<input type="hidden" name="fno" value="${vo.no}">
+															<input type="hidden" name="no" value="${rvo.no}">
+															<textarea rows="4" cols="70" style="float: left"
+																name="msg">${rvo.msg}</textarea>
+															<button type=submit class="btn-primary"
+																style="width: 100px; height: 92px; float: left">댓글수정</button>
+														</td>
+													</tr>
+												</form>
+											</table>
+										</td>
 									</tr>
 								</table>
 							</c:forEach></td>
@@ -102,9 +151,7 @@
 								<textarea rows="4" cols="80" style="float: left" name="msg"></textarea>
 
 								<button type=submit class="btn-primary"
-									style="width: 100px; height: 92px; float: left">댓글쓰기</button>
-
-							</td>
+									style="width: 100px; height: 92px; float: left">댓글쓰기</button></td>
 						</tr>
 					</form>
 				</table>

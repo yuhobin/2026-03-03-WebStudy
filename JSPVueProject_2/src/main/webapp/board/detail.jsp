@@ -1,5 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%--
+	1. MVC
+	2. MyBatis
+	3. JSP
+	------------- Back
+	4. Jquery
+	5. Ajax(프로젝트 전체적으로는 ajax로 제작) : 예약 
+	6. Vue(일부기능만 vue로 제작) : 검색 / 댓글
+	------------------- 게시판 / 회원 가입 / 로그인 / 회원 수정 / 회원 탙퇴 
+	=> 목록 페이지 / 상세보기 / 좋아요 / 찜하기 
+	=> 공지사항 
+	=> 관리 / 마이페이지
+	   ---
+	--------------------------- 최종 : ThymeLeaf + Pinia
+	Next (react)
+	=> CI/CD => 우분투 명령어 => AWS
+ --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,15 +57,15 @@ h3{
 				<tbody>
 					<tr>
 						<th width="20%" class="danger text-center">번호</th>
-						<td width="30%" class="text-center">{{detail.no}}</td>
+						<td width="30%" class="text-left">{{detail.no}}</td>
 						<th width="20%" class="danger text-center">작성일</th>
-						<td width="30%" class="text-center">{{detail.dbday}}</td>
+						<td width="30%" class="text-left">{{detail.dbday}}</td>
 					</tr>
 					<tr>
 						<th width="20%" class="danger text-center">이름</th>
-						<td width="30%" class="text-center">{{detail.name}}</td>
+						<td width="30%" class="text-left">{{detail.name}}</td>
 						<th width="20%" class="danger text-center">조회수</th>
-						<td width="30%" class="text-center">{{detail.hit}}</td>
+						<td width="30%" class="text-left">{{detail.hit}}</td>
 					</tr>
 					<tr>
 						<th width="20%" class="danger text-center">제목</th>
@@ -61,7 +78,7 @@ h3{
 					</tr>
 					<tr>
 						<td colspan="4" class="text-right">
-							<a href="#" class="btn btn-xs btn-warning">수정</a>
+							<a :href="'../board/update.do?no='+no" class="btn btn-xs btn-warning">수정</a>
 							<span class="btn btn-xs btn-warning"
 								@click="btnClick()"
 							>{{isOn?'삭제':'취소'}}</span>
@@ -106,7 +123,9 @@ h3{
 				updated() : data()안에 있는 데이터가 수정되는 경우
 				unmounted() : 화면 이동 / 브라우저 종료 / 새로고침
 			*/
+			// 브라우저에 화면 출력전에 호출
 			mounted(){
+					// board/detail_vue.do?no=1
 				axios.get('../board/detail_vue.do',{
 					params:{
 						no:this.no
@@ -117,14 +136,18 @@ h3{
 					// 실행된 결과를 자동을 첨부
 				})
 			},
+			// 이벤트 처리 
 			methods:{
 				btnClick(){
 					this.isOn=!this.isOn
 					this.bShow=!this.bShow
 				},
 				del(){
+					// 좌우 공백 제거
+					// 비교는 권장 === (데이터형 일치)
 					if(this.pwd.trim()==="") {
 						this.$refs.pwdRef.focus()
+						// 태그 자체를 제어 ==> ref 속성 ==> this.refs
 						return
 					}
 					// 데이터 전송
@@ -133,6 +156,15 @@ h3{
 							no:this.no,
 							pwd:this.pwd
 						}
+					// 응답 
+					/*
+						response : text / json
+											= text/plain
+									= text/html
+									
+									= 요청 처리에 대한 결과값
+										Model에서 처리
+					*/
 					}).then(response=>{
 						if(response.data==='yes') {
 							window.location.href="../board/list.do"
@@ -145,6 +177,8 @@ h3{
 					})
 				}
 			}
+			// components / computed => 계산식 (상품) / watch => 채팅 
+			// Vue => CRUD / 페이징 / 댓글
 		}).mount(".container")
 	</script>
 </body>

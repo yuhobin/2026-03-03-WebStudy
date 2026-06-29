@@ -16,6 +16,56 @@
 	--------------------------- 최종 : ThymeLeaf + Pinia
 	Next (react)
 	=> CI/CD => 우분투 명령어 => AWS
+	
+	
+	Parent = list
+	   |
+	Child = pagecard
+		parent => Child
+				값을 전송
+				
+				데이터가 많은 경우
+				props: {
+				
+				}
+				데이터가 1개인 경우
+				props:['변수']
+				
+				함수 호출
+				------
+				emits:['함수명']
+				
+				<pagecard : start-page="startPage"
+							@함수명="pageChange">
+				parent <=====>Child
+					=> camelCase => startPage
+					=> -
+				
+		
+		데이터 전송 : props
+		이벤트 전달 : emit
+		==================> $parent
+		
+		pagecard
+			|
+			| $emit('page-change', 5)
+		  parent	<pagecard @page-change="pageChange">
+		  (pageChange(5))
+		    |
+		   curpage=5
+		    |
+		   axios : 처리
+		   
+		  $emit을 사용하는 이유
+		  	1. Child Component에서는 Parent의 데이터를 직접 변경하면 안된다
+		  	   ---------------------------
+		  	   Parent에서 변경
+		  	2. $emit('page-change',5)
+		  		=> 페이지를 5페이지를 변경해 달라
+		  		=> pageChange(5)
+		  		
+		  	props는 parent = child로 데이터 전송 
+		  	$emit child = parent 이벤트 전달하는 경우에 사용
  --%>
 <!DOCTYPE html>
 <html>

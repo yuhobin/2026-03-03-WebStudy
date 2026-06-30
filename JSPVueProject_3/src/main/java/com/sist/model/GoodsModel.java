@@ -52,6 +52,9 @@ public class GoodsModel {
 	}
 	@RequestMapping("goods/detail.do")
 	public String goods_detail(HttpServletRequest request, HttpServletResponse response) {
+		String no=request.getParameter("no");
+		request.setAttribute("no", no);
+		request.setAttribute("cno", 1);
 		request.setAttribute("main_jsp", "../goods/detail.jsp");
 		return "../goods/detail.jsp";
 	}

@@ -1,10 +1,12 @@
 package com.sist.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import java.util.*;
-import com.sist.commons.*;
-import com.sist.vo.*;
+
+import com.sist.commons.CreateSqlSessionFactory;
+import com.sist.vo.GoodsVO;
 
 public class GoodsDAO {
 	private static SqlSessionFactory ssf;

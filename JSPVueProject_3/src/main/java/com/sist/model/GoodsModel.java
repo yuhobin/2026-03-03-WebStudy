@@ -56,7 +56,7 @@ public class GoodsModel {
 		request.setAttribute("no", no);
 		request.setAttribute("cno", 1);
 		request.setAttribute("main_jsp", "../goods/detail.jsp");
-		return "../goods/detail.jsp";
+		return "../main/main.jsp";
 	}
 	@RequestMapping("goods/detail_vue.do")
 	public void goods_detail_vue(HttpServletRequest request, HttpServletResponse response) {

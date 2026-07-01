@@ -20,7 +20,7 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="../main/main.do">WebSiteName</a>
+      <a class="navbar-brand" href="../main/main.do">WebSitePractice</a>
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a href="../main/main.do">Home</a></li>
@@ -36,7 +36,7 @@
     
       <c:if test="${sessionScope.id!=null }">
       <li><a href="../chat/chat.do">채팅</a></li>
-      <li><a href="../news/news.do">실시간뉴스</a></li>
+      <li><a href="../news/find.do">실시간뉴스</a></li>
       </c:if>
       
        <c:if test="${sessionScope.id!=null && sessionScope.isAdmin=='n'}">

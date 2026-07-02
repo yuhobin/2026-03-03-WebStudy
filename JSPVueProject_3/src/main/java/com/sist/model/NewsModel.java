@@ -12,13 +12,19 @@ import com.sist.manager.*;
 @Controller
 public class NewsModel {
 	@RequestMapping("news/find.do")
-	public String news_news(HttpServletRequest request, HttpServletResponse response) {
+	public String news_find(HttpServletRequest request, HttpServletResponse response) {
 		String fd=request.getParameter("fd");
 		if(fd==null) 
 			fd="날씨";
 		List<NewsVO> list=NewsManager.newsFindData(fd);
 		request.setAttribute("list", list);
 		request.setAttribute("main_jsp", "../news/find.jsp");
+		return "../main/main.jsp";
+	}
+	@RequestMapping("news/news.do")
+	public String news_news(HttpServletRequest request, HttpServletResponse response) {
+		
+		request.setAttribute("main_jsp", "../news/news.jsp");
 		return "../main/main.jsp";
 	}
 }

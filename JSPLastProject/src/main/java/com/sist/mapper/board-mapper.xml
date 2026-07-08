@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.board-mapper">
+<select id="boardListData" resultType="BoardVO" parameterType="int">
+	SELECT no, subject, name, TO_CHAR(regdate,'yyyy-MM-dd') as dbday, hit
+	FROM freeboard 
+	ORDER BY no DESC 
+	OFFSET #{start} ROWS FETCH NEXT 10 ROWS ONLY
+</select>
+<select id="boardTotalPage" resultType="int">
+	SELECT COUNT(*)
+	FROM freeboard
+</select>
+<insert id="boardInsert" parameterType="BoardVO">
+	INSERT INTO freeboard(no, name, subject, content, pwd)
+	VALUES(
+		fb_no_seq.nextval,
+		#{name}, #{subject}, #{content}, #{pwd}
+	)
+</insert>
+<update id="boardHitIncrement" parameterType="int">
+	UPDATE freeboard SET
+	hit=hit+1
+	WHERE no=#{no}
+</update>
+<!-- 
+	1. 회원가입 (로그인)
+	2. 게시판 : CRUD
+	3. 공지사항 : 관리자 / 일반 사용자
+	4. HttpSession / Cookie
+					  | 최신 방문 / 장바구니 / 자동로그인 (Spring => remember-me 사용)
+ -->
+<select id="boardDetailData" resultType="BoardVO" parameterType="int">
+	SELECT no, name, subject, content, hit, TO_CHAR(regdate,'yyyy-MM-dd hh24:mi:ss') as dbday
+	FROM freeboard
+	WHERE no=#{no}
+</select>
+<select id="boardGetPassword" resultType="string" parameterType="int">
+	SELECT pwd
+	FROM freeboard
+	WHERE no=#{no}
+</select>
+<delete id="boardDelete" parameterType="int">
+	DELETE FROM freeboard
+	WHERE no=#{no}
+</delete>
+
+<!--  수정 : 넘길때 insert 값 가지고올때 detail 비슷 -->
+<update id="boardUpdate">
+	UPDATE freeboard 
+	SET	name=${name},
+		subject={subject},
+		content=${content}
+	WHERE no=#{no} 
+</update>
+</mapper>

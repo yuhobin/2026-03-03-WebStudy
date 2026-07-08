@@ -1,16 +1,21 @@
 package com.sist.model;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
+import com.sist.dao.GoodsDAO;
+import com.sist.vo.GoodsVO;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import com.sist.dao.*;
-import com.sist.vo.*;
-import java.util.*;
 
 @Controller
 public class GoodsModel {
+
 	@RequestMapping("goods/goods_main_ajax.do")
 	public String goods_list_ajax(HttpServletRequest request, HttpServletResponse response) {
 		String cno=request.getParameter("category_no");
@@ -34,6 +39,20 @@ public class GoodsModel {
 		//request.setAttribute("list", list);   
 		request.setAttribute("main_jsp", "../goods/goods_main");
 		 //return "../goods/goods_main_ajax.jsp"; 
+		return "../main/main.jsp";
+	}
+	
+	/*@RequestMapping("goods/list.do")
+	public String goods_list(HttpServletRequest request, HttpServletResponse response) {
+
+		request.setAttribute("goods_content", "../goods/goods_main.jsp");
+		request.setAttribute("main_jsp", "../goods/goods.jsp");
+		return "../main/main.jsp";
+	}*/
+	@RequestMapping("goods/detail.do")
+	public String goods_detail(HttpServletRequest request, HttpServletResponse response) {
+		
+		request.setAttribute("main_jsp", "../goods/detail.jsp");
 		return "../main/main.jsp";
 	}
 }

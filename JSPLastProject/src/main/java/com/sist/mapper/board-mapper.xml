@@ -45,12 +45,10 @@
 	WHERE no=#{no}
 </delete>
 
-<!--  수정 : 넘길때 insert 값 가지고올때 detail 비슷 -->
-<update id="boardUpdate">
-	UPDATE freeboard 
-	SET	name=${name},
-		subject={subject},
-		content=${content}
-	WHERE no=#{no} 
-</update>
+<!--  수정  -->
+  <update id="boardUpdate" parameterType="BoardVO">
+    UPDATE freeboard SET 
+    name=#{name},subject=#{subject},content=#{content}
+    WHERE no=#{no}
+  </update>
 </mapper>

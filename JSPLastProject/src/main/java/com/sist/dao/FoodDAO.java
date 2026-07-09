@@ -92,4 +92,10 @@ public class FoodDAO {
 		session.close();
 		return vo;
 	}
+	public static FoodVO foodCookieData(int no) {
+		SqlSession session=ssf.openSession();
+		FoodVO vo=session.selectOne("foodDetailData", no);
+		session.close();
+		return vo;
+	}
 }

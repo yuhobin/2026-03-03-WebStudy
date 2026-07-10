@@ -69,13 +69,6 @@ public class BoardDAO {
 		    hit=hit+1
 		    WHERE no=#{no}
 		  </update>
-		  <!-- 
-		       1. 회원가입 (로그인)
-		       2. 게시판 : CRUD
-		       3. 공지사항 : 관리자 / 일반사용자 
-		       4. HttpSession / Cookie 
-		                        | 최신방문 / 장바구니 / 자동로그인 (remember-me)
-		   -->
 		  <select id="boardDetailData" resultType="BoardVO" parameterType="int">
 		    SELECT no,name,subject,content,hit,
 		           TO_CHAR(regdate,'yyyy-mm-dd hh24:mi:ss') as dbday

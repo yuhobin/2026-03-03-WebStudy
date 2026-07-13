@@ -111,6 +111,7 @@ public class MemberDAO {
 					vo.setAdmin(dbVO.getAdmin()); // 관리자 / 일반 사용자
 					vo.setEmail(dbVO.getEmail()); // 예약완료 / 회원가입 시 => email 전송
 					////////////////////////////////
+					vo.setRegdate(dbVO.getRegdate());
 				}
 				else {
 					vo.setMsg("NOPWD");

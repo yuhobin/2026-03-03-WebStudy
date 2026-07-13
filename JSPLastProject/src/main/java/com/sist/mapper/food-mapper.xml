@@ -1,58 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sist.mapper.food-mapper">
-  <!--  
-  	NO         NOT NULL NUMBER        
-	CNO                 NUMBER        
-	NAME       NOT NULL VARCHAR2(100) 
-	TYPE       NOT NULL VARCHAR2(200) 
-	PHONE      NOT NULL VARCHAR2(20)  
-	ADDRESS    NOT NULL VARCHAR2(500) 
-	PRICE               VARCHAR2(30)  
-	SCORE               NUMBER(2,1)   
-	THEME      NOT NULL CLOB          
-	TIME                VARCHAR2(100) 
-	RESERVE             VARCHAR2(100) 
-	PARKING    NOT NULL VARCHAR2(100) 
-	CONTENT    NOT NULL CLOB          
-	POSTER     NOT NULL VARCHAR2(260) 
-	IMAGES              CLOB          
-	LIKECOUNT           NUMBER        
-	REPLYCOUNT          NUMBER        
-	JJIMCOUNT           NUMBER        
-	HIT                 NUMBER      
-  -->
-	<select id="foodListData" resultType="FoodVO" parameterType="int">
-		SELECT no, name, poster, type, phone, likecount, replycount
-		FROM food2
-		ORDER BY no ASC
-		OFFSET #{start} ROWS FETCH NEXT 12 ROWS ONLY
-	</select>
-	<select id="foodTotalPage" resultType="int">
-		SELECT CEIL(COUNT(*)/12.0)
-		FROM food2
-	</select>
-	<update id="foodHitIncrement" parameterType="int">
-		UPDATE food2 SET
-		hit=hit+1
-		WHERE no=#{no}
-	</update>
-	<select id="foodDetailData" resultType="FoodVO" parameterType="int">
-		SELECT *
-		FROM food2
-		WHERE no=#{no}
-	</select>
-	
-	<select id="foodFindListData" resultType="FoodVO" parameterType="hashmap">
-		SELECT no, name, poster, type, phone, likecount, replycount
-		FROM food2
-		WHERE ${column} LIKE '%'||#{fd}||'%'
-		ORDER BY no ASC
-		OFFSET #{start} ROWS FETCH NEXT 12 ROWS ONLY
-	</select>
-	<select id="foodFindTotalPage" resultType="int" parameterType="hashmap">
-		SELECT CEIL(COUNT(*)/12.0)
-		FROM food2
-		WHERE ${column} LIKE '%'||#{fd}||'%'
-	</select>
+  <select id="foodListData" resultType="FoodVO" parameterType="int">
+    SELECT no,name,poster,type,phone,likecount,replycount
+    FROM food2
+    ORDER BY no ASC
+    OFFSET #{start} ROWS FETCH NEXT 12 ROWS ONLY
+  </select>
+  <select id="foodTotalPage" resultType="int">
+    SELECT CEIL(COUNT(*)/12.0)
+    FROM food2
+  </select>
+  <update id="foodHitIncrement" parameterType="int">
+    UPDATE food2 SET
+    hit=hit+1
+    WHERE no=#{no}
+  </update>
+  <select id="foodDetailData" resultType="FoodVO" parameterType="int">
+    SELECT *
+    FROM food2
+    WHERE no=#{no}
+  </select>
+  
+  <select id="foodFindListData" resultType="FoodVO" parameterType="hashmap">
+    SELECT no,name,poster,type,phone,likecount,replycount
+    FROM food2
+    WHERE ${column} LIKE '%'||#{fd}||'%'
+    ORDER BY no ASC
+    OFFSET #{start} ROWS FETCH NEXT 12 ROWS ONLY
+  </select>
+  <select id="foodFindTotalPage" resultType="int" parameterType="hashmap">
+    SELECT CEIL(COUNT(*)/12.0)
+    FROM food2
+    WHERE ${column} LIKE '%'||#{fd}||'%'
+  </select>
 </mapper>

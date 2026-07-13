@@ -59,6 +59,8 @@
 		<typeAlias type="com.sist.vo.TourVO" alias="TourVO"/>
 		<typeAlias type="com.sist.vo.BoardVO" alias="BoardVO"/>
 		<typeAlias type="com.sist.vo.ReviewVO" alias="ReviewVO"/>
+		<typeAlias type="com.sist.vo.LikeVO" alias="LikeVO"/>
+		<typeAlias type="com.sist.vo.NoticeVO" alias="NoticeVO"/>
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -76,6 +78,15 @@
 			</dataSource>
 		</environment>
 	</environments>
+	<!-- 
+		1. TABLE 제작 / SEQUENCE = 이미 제작
+		2. VO 제작
+		3. mapper 제작
+		4. DAO 제작
+		5. Model 제작
+		6. JSP 출력
+			Spring / Spring-Boot
+	 -->
 	<mappers>
 		<mapper resource="com/sist/mapper/member-mapper.xml"/>
 		<mapper resource="com/sist/mapper/food-mapper.xml"/>
@@ -83,6 +94,8 @@
 		<mapper resource="com/sist/mapper/main-mapper.xml"/>
 		<mapper resource="com/sist/mapper/board-mapper.xml"/>
 		<mapper resource="com/sist/mapper/review-mapper.xml"/>
+		<mapper resource="com/sist/mapper/like-mapper.xml"/>
+		<mapper resource="com/sist/mapper/notice-mapper.xml"/>
 		<!-- include -->
 	</mappers>
 </configuration>

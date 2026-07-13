@@ -4,6 +4,7 @@ import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
 
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import com.sist.vo.*;
 
@@ -86,9 +87,10 @@ public class MemberModel {
 			session.setAttribute("sex", vo.getSex());
 			session.setAttribute("email", vo.getEmail());
 			session.setAttribute("post", vo.getPost());
-			session.setAttribute("addr", vo.getAddr1()+""+vo.getAddr2());
+			session.setAttribute("address", vo.getAddr1()+""+vo.getAddr2());
 			session.setAttribute("phone", vo.getPhone());
 			session.setAttribute("admin", vo.getAdmin());
+			session.setAttribute("day", new SimpleDateFormat("yyyy-MM-dd").format(vo.getRegdate()));
 		}
 		
 		try {

@@ -7,6 +7,8 @@ import com.sist.controller.RequestMapping;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import com.sist.vo.*;
 import com.sist.dao.*;
 
@@ -51,6 +53,10 @@ public class FoodModel {
 		int curpage=Integer.parseInt(page);
 		int start=(curpage*12)-12;
 		List<FoodVO> list=FoodDAO.foodListData(curpage);
+		for(FoodVO vo:list) {
+			LikeDAO.foodLikeUpdate(vo.getNo());
+			ReviewDAO.foodReviewCount(vo.getNo());
+		}
 		int totalpage=FoodDAO.foodTotalPage();
 		
 		final int BLOCK=10;
@@ -104,6 +110,19 @@ public class FoodModel {
 		List<ReviewVO> list=ReviewDAO.reviewListData(Integer.parseInt(no));
 		request.setAttribute("reList", list);
 		request.setAttribute("rCount", list.size());
+		
+		HttpSession session=request.getSession();
+		String id=(String)session.getAttribute("id");
+		if(id!=null) {
+			int count=LikeDAO.likeCount(Integer.parseInt(no));
+			LikeVO lvo=new LikeVO();
+			lvo.setId(id);
+			lvo.setFno(Integer.parseInt(no));
+			int check=LikeDAO.likeCheck(lvo);
+			request.setAttribute("count", count);
+			request.setAttribute("check", check);
+			
+		}
 		return "../main/main.jsp";
 	}
 	/*

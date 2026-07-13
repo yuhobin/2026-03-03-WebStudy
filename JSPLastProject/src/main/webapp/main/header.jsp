@@ -176,7 +176,7 @@
                                     <a class="nav-link dropdown-toggle" href="#" id="yummyDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">커뮤니티</a>
                                     <div class="dropdown-menu" aria-labelledby="yummyDropdown">
                                         <a class="dropdown-item" href="../board/list.do">자유게시판</a>
-                                        <a class="dropdown-item" href="archive.html">공지사항</a>
+                                        <a class="dropdown-item" href="../notice/user_list.do">공지사항</a>
                                         <c:if test="${sessionScope.id!=null }">
                                         <a class="dropdown-item" href="single.html">실시간 채팅</a>
                                         </c:if>
@@ -185,12 +185,12 @@
                                 <c:if test="${sessionScope.id!=null }">
                                 <c:if test="${sessionScope.admin=='n' }">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="archive.html">마이페이지</a>
+                                    <a class="nav-link" href="../mypage/mypage_main.do">마이페이지</a>
                                 </li>
                                 </c:if>
                                 <c:if test="${sessionScope.admin=='y' }">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">관리자페이지</a>
+                                    <a class="nav-link" href="../adminpage/admin_main.do">관리자페이지</a>
                                 </li> 
                                 </c:if>
                                 </c:if>

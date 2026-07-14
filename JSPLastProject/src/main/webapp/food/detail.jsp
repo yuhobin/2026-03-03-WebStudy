@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="../css/comment.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery-4.0.0.min.js"></script>
 <script type="text/javascript">
 $(function(){
@@ -170,14 +171,22 @@ $(function(){
 								  <span class="heart">♡</span>
 								  <span class="count">${count }</span> 
 								</button>
-							</c:if>
-							<c:if test="${check==1 }">
-                               <button class="like-btn" id="likeOff">
-								  <span class="heart">♥</span>
-								  <span class="count">${count }</span> 
-								</button>
-							</c:if>
-                               <button class="btn-xs btn-info">찜하기</button>
+								</c:if>
+								<c:if test="${check==1 }">
+	                               <button class="like-btn" id="likeOff" data-no="${vo.no }">
+									  <span class="heart">♥</span>
+									  <span class="count">${count }</span> 
+									</button>
+								</c:if>
+							
+							<c:if test="${jCount==0 }">
+                               <a href="../jjim/jjim_insert.do?fno=${vo.no }" class="btn-sm btn-info">찜하기</a>
+                            </c:if>
+                            
+                            <c:if test="${jCount!=0 }">
+                               <span class="btn-sm btn-outline-info">찜완료</span>
+                            </c:if>
+                               
                                <c:if test="${vo.reserve!='불가' }">
                                 <button class="btn-xs btn-success">예약하기</button>
                                </c:if>

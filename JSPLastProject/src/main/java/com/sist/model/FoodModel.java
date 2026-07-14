@@ -101,6 +101,7 @@ public class FoodModel {
 	@RequestMapping("food/detail.do")
 	public String food_detail(HttpServletRequest request, HttpServletResponse response) {
 		String no=request.getParameter("no");
+		String fno=request.getParameter("fno");
 		FoodVO vo=FoodDAO.foodDetailData(Integer.parseInt(no));
 		request.setAttribute("vo", vo);
 		// 댓글은 => vue / find => vue 
@@ -121,6 +122,12 @@ public class FoodModel {
 			int check=LikeDAO.likeCheck(lvo);
 			request.setAttribute("count", count);
 			request.setAttribute("check", check);
+			
+			JjimVO jvo=new JjimVO();
+		      jvo.setId(id);
+		      jvo.setFno(Integer.parseInt(no));
+		      int jCount=JjimDAO.jjimCount(jvo);
+		      request.setAttribute("jCount", jCount);
 			
 		}
 		return "../main/main.jsp";

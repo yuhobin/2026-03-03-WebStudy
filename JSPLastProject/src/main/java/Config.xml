@@ -96,6 +96,8 @@
 		<mapper resource="com/sist/mapper/review-mapper.xml"/>
 		<mapper resource="com/sist/mapper/like-mapper.xml"/>
 		<mapper resource="com/sist/mapper/notice-mapper.xml"/>
+		<mapper resource="com/sist/mapper/admin-mapper.xml"/>
+		<mapper resource="com/sist/mapper/jjim-mapper.xml"/>
 		<!-- include -->
 	</mappers>
 </configuration>

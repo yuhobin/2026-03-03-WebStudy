@@ -56,4 +56,55 @@ public class NoticeDAO {
 		   session.close();
 		   return total;
 	   }
+	   /*
+	    * <delete id="noticeDelete" parameterType="int">
+		DELETE FROM notice
+		WHERE no=#{no}
+	</delete>
+	    */
+	   public static void noticeDelete(int no)
+	   {
+		   SqlSession session=ssf.openSession(true);
+		   session.delete("noticeDelete",no);
+		   session.close();
+	   }
+	   /*
+	    *  <select id="noticeDetailData" resultType="NoticeVO" parameterType="int">
+				SELECT *
+				FROM notice
+				WHERE no=#{no}
+			</select>
+			<update id="noticeHitIncrement" parameterType="int">
+				UPDATE notice SET
+				hit=hit+1
+				WHERE no=#{no}
+			</update>
+	    */
+	   public static NoticeVO noticeUpdateData(int no) {
+		   SqlSession session=ssf.openSession();
+		   NoticeVO vo=session.selectOne("noticeDetailData",no);
+		   session.close();
+		   return vo;
+	   }
+	   public static NoticeVO noticeDetailData(int no) {
+		   SqlSession session=ssf.openSession();
+		   session.update("noticeHitIncrement",no);
+		   NoticeVO vo=session.selectOne("noticeDetailData",no);
+		   session.close();
+		   return vo;
+	   }
+	   /*
+	    *   <update id="noticeUpdate" parameterType="NoticeVO">
+				UPDATE notice SET
+				subject=#{subject}, content=#{content}, type=#{type}
+				WHERE no=#{no}
+			</update>
+	    */
+	   public static void noticeUpdate(NoticeVO vo)
+	   {
+		   SqlSession session=ssf.openSession(true);
+		   session.update("noticeUpdate",vo);
+		   session.close();
+	   }
+	   
 }

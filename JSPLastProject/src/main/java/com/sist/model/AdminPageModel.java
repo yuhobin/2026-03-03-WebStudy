@@ -8,8 +8,10 @@ import com.sist.controller.RequestMapping;
 import com.sist.dao.AdminDAO;
 import com.sist.dao.BoardDAO;
 import com.sist.dao.MemberDAO;
+import com.sist.dao.ReserveDAO;
 import com.sist.vo.BoardVO;
 import com.sist.vo.MemberVO;
+import com.sist.vo.ReserveVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -64,5 +66,19 @@ public class AdminPageModel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	@RequestMapping("adminpage/admin_reserve.do")
+	public String admin_reserve(HttpServletRequest request, HttpServletResponse response) {
+		List<ReserveVO> list=ReserveDAO.reserveAdminPageListData();
+		request.setAttribute("list", list);
+		request.setAttribute("admin_jsp", "../adminpage/admin_reserve.jsp");
+		return "../adminpage/admin_main.jsp";
+	}
+	@RequestMapping("adminpage/reserve_ok.do")
+	public String admin_reserve_ok(HttpServletRequest request, HttpServletResponse response) {
+		
+		String rno=request.getParameter("rno");
+		AdminDAO.reserveAdminOk(Integer.parseInt(rno));
+		return "redirect:../adminpage/admin_reserve.do";
 	}
 }

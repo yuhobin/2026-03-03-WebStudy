@@ -20,9 +20,9 @@ public class LikeModel {
 		vo.setId(id);
 		vo.setGoods_no(Integer.parseInt(goods_no));
 		LikeDAO.likeOn(vo);
-		LikeDAO.goodsLikeUpdate(Integer.parseInt(goods_no));
+		/* LikeDAO.goodsLikeUpdate(Integer.parseInt(goods_no)); */
 		
-		return "redirect:../goods/detail.do?like_no="+goods_no;
+		return "redirect:../goods/detail.do?goods_no="+goods_no;
 	}
 	
 	@RequestMapping("like/likeOff.do")
@@ -34,8 +34,8 @@ public class LikeModel {
 		vo.setId(id);
 		vo.setGoods_no(Integer.parseInt(goods_no));
 		LikeDAO.likeOff(vo);
-		LikeDAO.goodsLikeUpdate(Integer.parseInt(goods_no));
+		/* LikeDAO.goodsLikeUpdate(Integer.parseInt(goods_no)); */
 		
-		return "redirect:../goods/detail.do?like_no="+goods_no;
+		return "redirect:../goods/detail.do?goods_no="+goods_no;
 	}
 }

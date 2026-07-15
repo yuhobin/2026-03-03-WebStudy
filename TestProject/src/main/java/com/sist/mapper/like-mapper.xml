@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sist.mapper.like-mapper">
 	<insert id="likeOn" parameterType="com.sist.vo.LikeVO">
-		INSERT INTO goods_like VALUES (
+		INSERT INTO goods_like(like_no, goods_no, id) 
+		VALUES (
 			goods_like_like_no_seq.nextval,
 			#{goods_no},
 			#{id}
@@ -10,7 +11,7 @@
 	</insert>
 	<delete id="likeOff" parameterType="com.sist.vo.LikeVO">
 		DELETE FROM goods_like
-		WHERE id=#{id} AND good_no=#{goods_no}
+		WHERE id=#{id} AND goods_no=#{goods_no}
 	</delete>
 	<select id="likeCount" resultType="int" parameterType="int">
 		SELECT COUNT(*)
@@ -22,11 +23,11 @@
 		FROM goods_like
 		WHERE goods_no=#{goods_no} AND id=#{id}
 	</select>
-	<update id="goodsLikeUpdate">
-		UPDATE goods_like SET
-		likecount=(SELECT COUNT(*)
+	<!-- <update id="goodsLikeUpdate" parameterType="int">
+		UPDATE goods SET
+		like_count=(SELECT COUNT(*)
 					FROM goods_like
 					WHERE goods_no=#{goods_no})
-		WHERE no=#{goods_no}
-	</update>
+		WHERE goods_no=#{goods_no}
+	</update> -->
 </mapper>

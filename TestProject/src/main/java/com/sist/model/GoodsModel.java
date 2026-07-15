@@ -11,11 +11,15 @@ import com.sist.controller.RequestMapping;
 import com.sist.dao.GoodsDAO;
 import com.sist.dao.LikeDAO;
 import com.sist.vo.GoodsVO;
+import com.sist.vo.LikeVO;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
+import com.sist.vo.*;
+import com.sist.dao.*;
 @Controller
 public class GoodsModel {
 
@@ -37,9 +41,11 @@ public class GoodsModel {
         map.put("sort", "default");         
 
         List<GoodsVO> list = GoodsDAO.goodsListData(map);   
-        for(GoodsVO vo:list) {
-			LikeDAO.goodsLikeUpdate(vo.getGoods_no());
-		}
+		
+		/*
+		 * for(GoodsVO vo:list) { LikeDAO.goodsLikeUpdate(vo.getGoods_no()); }
+		 */
+		 
         int totalpage = GoodsDAO.goodsTotalPage(Integer.parseInt(cno));        
 
         final int BLOCK=10;
@@ -100,8 +106,24 @@ public class GoodsModel {
         String goods_no=request.getParameter("goods_no");
         
         if(goods_no!=null) {
-            GoodsVO vo = GoodsDAO.goodsDetailData(Integer.parseInt(goods_no));
+        	int gno = Integer.parseInt(goods_no);
+            GoodsVO vo = GoodsDAO.goodsDetailData(gno);
             request.setAttribute("vo", vo);
+            
+            HttpSession session = request.getSession();
+            String id = (String) session.getAttribute("id");
+
+            int check = 0; // 기본은 안 누른 상태(0)
+            if(id != null) {
+                LikeVO lvo = new LikeVO();
+                lvo.setId(id);
+                lvo.setGoods_no(gno);
+                check = LikeDAO.likeCheck(lvo);
+            }
+            int likecount = LikeDAO.likeCount(gno);
+
+            request.setAttribute("check", check);
+            request.setAttribute("likecount", likecount);
         }
         
         request.setAttribute("main_jsp", "../goods/detail.jsp");
@@ -160,6 +182,68 @@ public class GoodsModel {
             response.setContentType("text/plain;charset=UTF-8");
             PrintWriter out = response.getWriter();
             out.write(json);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+ // 장바구니 담기
+    @RequestMapping("goods/cart_insert.do")
+    public void cart_insert(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            HttpSession session = request.getSession();
+            String id = (String) session.getAttribute("id");
+
+            response.setContentType("text/plain;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            
+            if(id == null) {
+                out.write("NO_LOGIN"); 
+                return;
+            }
+            
+            // 화면에서 보낸 데이터 받기
+            String goods_no = request.getParameter("goods_no");
+            String goods_size = request.getParameter("sizes");
+            String requestQty = request.getParameter("quantity"); // 고객이 요청한 수량
+            String stock_no = request.getParameter("stock_no");
+            int reqQuantity = Integer.parseInt(requestQty);
+            
+            // 재고번호와 남은 수량 가져오기
+            Map stockMap = new HashMap();
+            stockMap.put("goods_no", Integer.parseInt(goods_no));
+            stockMap.put("goods_size", Integer.parseInt(goods_size));
+            
+            int svo = GoodsDAO.stockQuantityCheck(stockMap); 
+            
+            // 해당 사이즈의 재고 데이터 자체가 없을 때
+            if(svo == 0) {
+                out.write("NO_STOCK_DATA");
+                return;
+            }
+            
+            // 재고가 고객이 사려는 개수보다 적을 때
+            if(svo < reqQuantity) {
+                out.write("OUT_OF_STOCK");
+                return;
+            }
+            
+            Map cartMap = new HashMap();
+            cartMap.put("id", id);
+            cartMap.put("stock_no", Integer.parseInt(stock_no)); 
+            cartMap.put("sizes", Integer.parseInt(goods_size));
+            cartMap.put("quantity", Integer.parseInt(requestQty));
+            
+            // 장바구니 테이블 조회 및 담기
+            int cartCount = GoodsDAO.cartCount(cartMap);
+            
+            if(cartCount > 0) {
+                GoodsDAO.cartUpdate(cartMap); // 이미 있으면 수량 증가
+            } else {
+                GoodsDAO.cartInsert(cartMap); // 없으면 새로 추가
+            }
+            
+            out.write("SUCCESS");
             
         } catch (Exception e) {
             e.printStackTrace();

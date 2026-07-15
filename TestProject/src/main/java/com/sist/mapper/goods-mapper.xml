@@ -59,7 +59,8 @@
 	<select id="goodsDetailData" resultType="GoodsVO" parameterType="int">
 		SELECT goods_no, goods_name, goods_code, goods_price, 
 		       goods_discount, poster_url, subposter_url, hit,
-		       b.brand_name, c.category_name 
+		       b.brand_name, c.category_name,
+		       (SELECT COUNT(*) FROM goods_like gl WHERE gl.goods_no=g.goods_no) as like_count 
 		FROM goods g JOIN brand b 
 		ON g.brand_no = b.brand_no
 		JOIN category c 
@@ -94,10 +95,10 @@
 	
 	<!-- 1. 재고 있는지 확인 -->
 	<select id="stockQuantityCheck" resultType="int" parameterType="map">    
-	SELECT COUNT(*)    
+	SELECT quantity, goods_size    
 	FROM stock     
 	WHERE goods_no = #{goods_no} 
-	AND size = #{size}
+	AND goods_size = #{goods_size}
 	</select>
 
 	<!-- 2. 장바구니에 똑같은 상품+사이즈가 있는지 확인  -->

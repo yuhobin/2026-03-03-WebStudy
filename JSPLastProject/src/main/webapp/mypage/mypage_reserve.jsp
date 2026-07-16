@@ -6,6 +6,42 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+$(function(){
+	$('.reserves').on('click',function(){
+		let rno=$(this).attr("data-rno")
+		$.ajax({
+			type:'post',
+			url:'reserve_info.do',
+			data:{"rno":rno},
+			success:function(result) {
+				let json=JSON.parse(result)
+				/*
+					자바스크립트 객체 표현법 필기
+				*/
+				console.log(json)
+				$('#img').attr("src",json.fvo.poster)
+				$('#rno').text(json.rno)
+				$('#rdate').text(json.rdate)
+				$('#rtime').text(json.rtime)
+				$('#inwon').text(json.inwon)
+				$('#name').text(json.fvo.name)
+				$('#score').text(json.fvo.score)
+				$('#address').text(json.fvo.address)
+				$('#phone').text(json.fvo.phone)
+				$('#type').text(json.fvo.type)
+				$('#time').text(json.fvo.time)
+				$('#parking').text(json.fvo.parking)
+				$('#info').show()
+				
+				setTimeout(()=>{
+					$('#info').hide("slow")
+				},2000)
+			}
+		})
+	})
+})
+</script>
 </head>
 <body>
 	<main class="mypage-main">
@@ -36,12 +72,59 @@
     						<span class="btn btn-xs btn-default">예약대기</span>
     					</c:if>
     					<c:if test="${vo.ok=='y' }">
-    						<span class="btn btn-xs btn-danger">예약완료</span>
+    						<span class="btn btn-xs btn-danger reserves" data-rno="${vo.rno }">예약완료</span>
     					</c:if>
-    					<a href="#" class="btn btn-xs btn-warning">예약취소</a>
+    					<a href="../reserve/reserve_delete.do?rno=${vo.rno }" class="btn btn-xs btn-warning">예약취소</a>
     				</td>
     			</tr>
     			</c:forEach>
+    			</table>
+    			<table id="info" style="display: none">
+    				<tr>
+    					<td width="40%" rowspan="10" class="text-center">
+    						<img src="" id="img" style="width: 340px; height: 350px" class="rounded">
+    					</td>
+    					<td colspan="2">
+    					<h3><span id="name"></span>
+    						&nbsp;<span id="score" style="color:orange;"></span></h3>
+    					</td>
+    				</tr>
+    				<tr>
+    					<td width="15" style="color: gray;">예약번호</td>
+    					<td width="45" id="rno"></td>
+    				</tr>
+    				<tr>
+    					<td width="15" style="color: gray;">예약일</td>
+    					<td width="45" id="rdate"></td>
+    				</tr>
+    				<tr>
+    					<td width="15" style="color: gray;">예약시간</td>
+    					<td width="45" id="rtime"></td>
+    				</tr>
+    				<tr>
+    					<td width="15" style="color: gray;">예약인원</td>
+    					<td width="45" id="inwon"></td>
+    				</tr>
+    				<tr>
+    					<td width="15" style="color: gray;">주소</td>
+    					<td width="45" id="address"></td>
+    				</tr>
+    				<tr>
+    					<td width="15" style="color: gray;">전화</td>
+    					<td width="45" id="phone"></td>
+    				</tr>
+    				<tr>
+    					<td width="15" style="color: gray;">음식종류</td>
+    					<td width="45" id="type"></td>
+    				</tr>
+    				<tr>
+    					<td width="15" style="color: gray;">주차</td>
+    					<td width="45" id="parking"></td>
+    				</tr>
+    				<tr>
+    					<td width="15" style="color: gray;">영업시간</td>
+    					<td width="45" id="time"></td>
+    				</tr>
     			</table>
     		</div>
     </main>

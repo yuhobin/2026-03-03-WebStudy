@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,49 +48,29 @@ $(function() {
 		if (parseInt(qty.value) > 1)
 			qty.value = parseInt(qty.value) - 1;
 	});
-
-	// 연관상품 슬라이드 초기화 (한 화면에 6개씩, 옆으로 넘김)
-	new Swiper('.relatedSwiper', {
-		slidesPerView:6,
-		spaceBetween:16,
-		navigation:{
-			nextEl:'.relatedSwiper .swiper-button-next',
-			prevEl:'.relatedSwiper .swiper-button-prev'
-		},
-		breakpoints:{
-			0:{
-				slidesPerView:2
-			},
-			768:{
-				slidesPerView:4
-			},
-			992:{
-				slidesPerView:6
-			}
-		}
-	});
 	
+
 	    $('#likeOn').on('click', function() {
-	        let gno = $(this).attr('data-no');
-	        location.href = "../like/likeOn.do?goods_no=" + gno;
+	        let gno=$(this).attr('data-no');
+	        location.href = "../like/likeOn.do?goods_no="+gno;
 	    });
 
 	    $('#likeOff').on('click', function() {
-	        let gno = $(this).attr('data-no');
-	        location.href = "../like/likeOff.do?goods_no=" + gno;
+	        let gno=$(this).attr('data-no');
+	        location.href = "../like/likeOff.do?goods_no="+gno;
 	    });
 	    
 		$('#cartBtn').on('click', function() {
 			let gno = $(this).attr('data-no');
 			
-			let selectedSizeBtn = $('.size-btn.active');
-			if(selectedSizeBtn.length === 0) {
+			let selectedSizeBtn=$('.size-btn.active');
+			if(selectedSizeBtn.length===0) {
 				alert("상품 사이즈를 먼저 선택해주세요.");
 				return;
 			}
-			let size = selectedSizeBtn.text().trim(); 
+			let size=selectedSizeBtn.text().trim(); 
 			
-			let qty = $('#qtyInput').val(); 
+			let qty=$('#qtyInput').val(); 
 			
 			$.ajax({
 				type: 'post',
@@ -100,19 +81,19 @@ $(function() {
 					quantity: qty
 				},
 				success: function(res) {
-					let result = res.trim(); 
+					let result=res.trim(); 
 					
-					if(result === 'NO_LOGIN') {
+					if(result==='NO_LOGIN') {
 						alert("로그인이 필요한 서비스입니다.");
 						location.href = "../member/login.do"; 
 						
-					} else if(result === 'NO_STOCK_DATA') {
+					} else if(result==='NO_STOCK_DATA') {
 						alert("죄송합니다. 해당 사이즈의 상품 정보가 존재하지 않습니다");
 						
-					} else if(result === 'OUT_OF_STOCK') {
+					} else if(result==='OUT_OF_STOCK') {
 						alert("죄송합니다. 선택하신 제품의 재고가 부족합니다.");
 						
-					} else if(result === 'SUCCESS') {
+					} else if(result==='SUCCESS') {
 						alert("장바구니에 상품이 담겼습니다. 장바구니로 이동합니다.");
 						location.href = "../cart/cart.do"; 
 					} 
@@ -122,6 +103,20 @@ $(function() {
 					alert("서버에러가 발생했습니다.");
 				}
 			});
+		});
+		$('#buyBtn').on('click', function() {
+		    let gno=$(this).attr('data-no'); 
+		    let selectedSizeBtn=$('.size-btn.active'); 
+		    
+		    if(selectedSizeBtn.length===0) {
+		        alert("상품 사이즈를 먼저 선택해주세요.");
+		        return;
+		    }
+		    
+		    let size=selectedSizeBtn.text().trim(); 
+		    let qty=$('#qtyInput').val();
+
+		    location.href="checkout.do?goods_no="+gno+"&sizes="+size+"&quantity="+qty;
 		});
 	});
 </script>
@@ -165,14 +160,14 @@ $(function() {
 								<!-- 이부분은 나중에 리뷰 담당자와 논의 후 별점 유무 진행 -->
 								<use xlink:href="#star-solid"></use></svg> <svg width="18" height="18"
 								class="text-warning">
-								<use xlink:href="#star-solid"></use></svg> <svg width="18" height="18"
+								<use xlink:href="#star-solid"></use></svg> <svg width="18" height="18"S
 								class="text-warning">
 								<use xlink:href="#star-solid"></use></svg> <svg width="18" height="18"
 								class="text-warning">
 								<use xlink:href="#star-solid"></use></svg> <svg width="18" height="18"
 								class="text-warning">
 								<use xlink:href="#star-solid"></use></svg>
-						</span> <small class="text-body-secondary">리뷰 ${review_count }개</small> <!-- 리뷰 개수 세서 표시 -->
+						</span> <small class="text-body-secondary">리뷰 ${vo.review_count }개</small> <!-- 리뷰 개수 세서 표시 -->
 					</div>
 					
 					<div class="my-3">
@@ -188,10 +183,10 @@ $(function() {
 					<div class="my-4">
 						<label class="fw-bold d-block mb-2">사이즈</label><!-- 사이즈 버튼 클릭하면  -->
 						<div class="d-flex flex-wrap gap-2" id="sizeGroup">
+							<button type="button" class="btn btn-outline-dark size-btn">230</button>
 							<button type="button" class="btn btn-outline-dark size-btn">240</button>
 							<button type="button" class="btn btn-outline-dark size-btn">250</button>
-							<button type="button"
-								class="btn btn-outline-dark size-btn active">260</button>
+							<button type="button" class="btn btn-outline-dark size-btn active">260</button>
 							<button type="button" class="btn btn-outline-dark size-btn">270</button>
 							<button type="button" class="btn btn-outline-dark size-btn">280</button>
 						</div>
@@ -215,14 +210,16 @@ $(function() {
 					</div>
 
 					<!-- CTA -->
-					<c:if test="${sessionScope.id!=null }">
 					<div class="d-flex flex-wrap gap-2 my-4">
-							<button class="btn btn-primary btn-lg px-4" id="cartBtn" data-no="${vo.goods_no}">
-   								장바구니 담기 
-   							</button>
-							
-						<a href="checkout.do" class="btn btn-dark btn-lg px-4">바로 구매</a>
-						<c:if test="${check == 0}">
+						<button class="btn btn-primary btn-lg px-4" id="cartBtn" data-no="${vo.goods_no}">
+   							장바구니 담기 
+   						</button>
+   							
+						<!--바로구매 버튼으로 수정 -->
+						<button type="button" class="btn btn-dark btn-lg px-4" id="buyBtn" data-no="${vo.goods_no}">
+    						바로 구매
+						</button> 
+						<c:if test="${check==0}">
 						    <button class="btn btn-outline-dark btn-lg" id="likeOn" data-no="${vo.goods_no}">
 						        <svg width="22" height="22">
 						            <use xlink:href="#heart-empty"></use> 
@@ -230,7 +227,7 @@ $(function() {
 						        <span class="ms-2">${like_count}</span>
 						    </button>
 						</c:if>
-						<c:if test="${check == 1}">
+						<c:if test="${check==1}">
 						    <button class="btn btn-danger btn-lg" id="likeOff" data-no="${vo.goods_no}">
 						        <svg width="22" height="22" fill="white">
 						            <use xlink:href="#heart-fill"></use> 
@@ -239,7 +236,6 @@ $(function() {
 						    </button>
 						</c:if>
 					</div>
-					</c:if>
 
 					<ul class="list-unstyled text-body-secondary small border-top pt-3">
 						<li class="mb-1">• 무료 배송 (3만원 이상 구매 시)</li>
@@ -259,25 +255,6 @@ $(function() {
 					<img src="${vo.subposter_url}" class="img-fluid w-100" alt="상품 상세설명">
 				</div>
 			</div>
-			<div class="row mt-5">
-				<div class="col-12">
-					<h5 class="fw-bold mb-3">연관상품추천</h5>
-					<div class="swiper relatedSwiper">
-						<div class="swiper-wrapper">
-						
-							<div class="swiper-slide">
-								<a href="../main/product.do?no=1"
-									class="text-decoration-none text-dark"> <img
-									src="../resources/images/product-thumb-1.png"
-									style="width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 8px; background: #f5f5f5;"
-									alt="상품">
-									<div class="small mt-2">클래식 러너 스니커즈</div>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
 
 			<div class="row mt-5">
 				<div class="col-12">
@@ -287,8 +264,8 @@ $(function() {
 						<li class="nav-item"><button class="nav-link"
 								data-bs-toggle="tab" data-bs-target="#qna" type="button">상품문의</button></li>
 					</ul>
-					<div class="tab-content border border-top-0 p-4 rounded-bottom">
-						<div class="tab-pane fade show active" id="desc">
+			<div class="tab-content border border-top-0 p-4 rounded-bottom">
+				<div class="tab-pane fade show active" id="desc">
 							<div class="row mt-5" id="reviewArea">
 				<div class="col-12">
 
@@ -299,10 +276,74 @@ $(function() {
 						<div class="row align-items-center">
 
 							<!-- 평균 점수 -->
+							<c:set var="totalHit" value="0" />
+							<c:set var="totalCount" value="0" />
+							
+							<c:forEach var="rvo" items="${rList}">
+							    <c:set var="totalHit" value="${totalHit + rvo.hit}" />
+							    <c:set var="totalCount" value="${totalCount + 1}" />
+							</c:forEach>
+							
+							<c:set var="avgScore" value="0.0" />
+							<c:if test="${totalCount > 0}">
+							    <c:set var="avgScore" value="${totalHit / totalCount}" />
+							</c:if>
+							
+							<fmt:formatNumber var="roundScore" value="${avgScore}" pattern="0" />
+							
+							
 							<div class="col-md-4 text-center border-end">
-								<!-- 평균 점수 숫자: JSP에서 ${avgRating} 등으로 교체 -->
-								<div class="display-4 fw-bold">4.5</div>
-								<span class="d-inline-flex"> <svg width="20" height="20"
+								<div class="display-4 fw-bold">
+							        <fmt:formatNumber value="${avgScore}" pattern="0.0" />
+							    </div>
+
+								
+								<c:forEach var="rvo" items="${rList}">
+									<c:choose>
+					       		<c:when test="${0 < avgScore && avgScore <= 1}">
+									<span class="d-inline-flex"> <svg width="20" height="20"
+										class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg>
+									</span>
+								</c:when>
+								<c:when test="${1 < avgScore && avgScore <= 2}">
+									<span class="d-inline-flex"> <svg width="20" height="20"
+										class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg>
+									</span>
+								</c:when>
+								<c:when test="${2 < avgScore && avgScore <= 3}">
+									<span class="d-inline-flex"> <svg width="20" height="20"
+										class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg>
+									</span>
+								</c:when>
+								<c:when test="${3 < avgScore && avgScore <= 4}">
+									<span class="d-inline-flex"> <svg width="20" height="20"
 										class="text-warning">
 									<use xlink:href="#star-solid"></use></svg> <svg width="20"
 										height="20" class="text-warning">
@@ -313,9 +354,27 @@ $(function() {
 									<use xlink:href="#star-solid"></use></svg> <svg width="20"
 										height="20" class="text-warning">
 									<use xlink:href="#star-outline"></use></svg>
-								</span>
-								<!-- 전체 리뷰 개수: ${reviewCount} 등으로 교체 -->
-								<p class="text-body-secondary mb-0 mt-2">전체 리뷰 128개</p>
+									</span>
+								</c:when>
+								<c:when test="${4 < avgScore && avgScore <= 5}">
+									<span class="d-inline-flex"> <svg width="20" height="20"
+										class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg><svg width="20"
+										 height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg>
+									</span>
+								</c:when>
+					      	</c:choose>
+							</c:forEach>
+								
+								<!-- 전체 리뷰 개수 -->
+								<p class="text-body-secondary mb-0 mt-2">전체 리뷰 ${vo.review_count }개</p>
 							</div>
 
 							<!-- 점수 안내 문구 -->
@@ -326,61 +385,108 @@ $(function() {
 
 						</div>
 					</div>
-
+					
 					<!-- (2) 리뷰 목록 -->
-					<!-- <c:forEach var="review" items="${reviewList}"> -->
-					<div class="review-card border rounded-4 p-4 mb-3">
-						<div class="d-flex justify-content-between align-items-start mb-2">
-							<div>
-								<!-- 리뷰 제목: ${review.title} -->
-								<h6 class="fw-bold mb-1">가볍고 편해서 매일 신어요</h6>
-								<!-- 작성자: ${review.writer} 작성자 이름 -->
-								<small class="text-body-secondary">작성자: 김민수</small>
-							</div>
-							<!-- 개별 평점: 별 개수를 ${review.rating} 값에 따라 표시 -->
-							<span class="d-inline-flex"> <svg width="16" height="16"
-									class="text-warning">
-								<use xlink:href="#star-solid"></use></svg> <svg width="16" height="16"
-									class="text-warning">
-								<use xlink:href="#star-solid"></use></svg> <svg width="16" height="16"
-									class="text-warning">
-								<use xlink:href="#star-solid"></use></svg> <svg width="16" height="16"
-									class="text-warning">
-								<use xlink:href="#star-solid"></use></svg> <svg width="16" height="16"
-									class="text-warning">
-								<use xlink:href="#star-solid"></use></svg>
-							</span>
-						</div>
-						<!-- 리뷰 내용: ${review.content} -->
-						<p class="text-body-secondary mb-0">사이즈 정사이즈입니다. 착화감이 부드럽고 하루종일 신어도 발이 편했어요.</p>
+					<c:if test="${empty rList}">
+					<div class="text-center p-4 text-body-secondary border rounded-4 bg-light mb-3">
+					    아직 등록된 리뷰가 없습니다. 첫 리뷰를 작성해주세요.
 					</div>
-					<!-- </c:forEach> -->
-
-					<!-- (미리보기용 예시 리뷰 - JSTL 적용 후 삭제하세요) -->
+					</c:if>
+					
+					<c:forEach var="rvo" items="${rList}">
 					<div class="review-card border rounded-4 p-4 mb-3">
-						<div class="d-flex justify-content-between align-items-start mb-2">
-							<div>
-								<h6 class="fw-bold mb-1">디자인이 예뻐요</h6>
-								<small class="text-body-secondary">작성자: 이서연</small>
-							</div>
-							<span class="d-inline-flex"> <svg width="16" height="16"
-									class="text-warning">
-								<use xlink:href="#star-solid"></use></svg> <svg width="16" height="16"
-									class="text-warning">
-								<use xlink:href="#star-solid"></use></svg> <svg width="16" height="16"
-									class="text-warning">
-								<use xlink:href="#star-solid"></use></svg> <svg width="16" height="16"
-									class="text-warning">
-								<use xlink:href="#star-solid"></use></svg> <svg width="16" height="16"
-									class="text-body-tertiary">
-								<use xlink:href="#star-outline"></use></svg>
-							</span>
-						</div>
-						<p class="text-body-secondary mb-0">색상이 화면과 동일하고 코디하기 좋아요. 배송도 빨랐습니다.</p>
+					    <div class="d-flex justify-content-between align-items-start mb-2">
+					        <div>
+					            <h6 class="fw-bold mb-1">
+					                <a href="../review/detail.do?review_no=${rvo.review_no}" class="text-dark text-decoration-none">
+					                    ${rvo.subject}
+					                </a>
+					            </h6>
+					            <small class="text-body-secondary">작성자: ${rvo.id}</small>
+					            <small class="text-body-tertiary ms-2">${rvo.dbday}</small>
+					        </div>
+					         
+					        <%-- 리뷰 평점 --%>
+					       	<c:choose>
+					       		<c:when test="${rvo.hit==1}">
+									<span class="d-inline-flex"> <svg width="20" height="20"
+										class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg>
+									</span>
+								</c:when>
+								<c:when test="${rvo.hit==2}">
+									<span class="d-inline-flex"> <svg width="20" height="20"
+										class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg>
+									</span>
+								</c:when>
+								<c:when test="${rvo.hit==3}">
+									<span class="d-inline-flex"> <svg width="20" height="20"
+										class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg>
+									</span>
+								</c:when>
+								<c:when test="${rvo.hit==4}">
+									<span class="d-inline-flex"> <svg width="20" height="20"
+										class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg>
+									</span>
+								</c:when>
+								<c:when test="${rvo.hit==5}">
+									<span class="d-inline-flex"> <svg width="20" height="20"
+										class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg><svg width="20"
+										 height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg>
+									</span>
+								</c:when>
+					      	</c:choose>
+					    </div>
+					    <!-- 리뷰 내용 -->
+					    <p class="text-body-secondary mb-0">${rvo.content}</p>
 					</div>
+					</c:forEach>
 				</div>
 			</div>
-						</div>
+			</div>
 						
 						<div class="tab-pane fade" id="qna">
 							<%-- 상품 문의 내역 리스트 --%>
@@ -397,14 +503,13 @@ $(function() {
 									<%-- 문의 1건 = tr 하나. <c:forEach var="qna" items="${qnaList}"> 로 반복 --%>
 									<!-- <c:forEach var="qna" items="${qnaList}"> -->
 									<tr>
-										<td class="text-center">상품 문의</td>
-										<td><a href="#" class="text-dark text-decoration-none">사이즈가
-												어떻게 되나요?</a></td>
-										<td class="text-center text-body-secondary">2026.07.03</td>
-										<td class="text-center"><span class="badge bg-success">답변완료</span></td>
+										<td class="text-center">${qvo.type }</td>
+										<td><a href="#" class="text-dark text-decoration-none">${qvo.subject}</a></td>
+										<td class="text-center text-body-secondary">${qvo.dbday }</td>
+										<td class="text-center"><span class="badge bg-success">${qvo.status}</span></td>
 									</tr>
 									<!-- </c:forEach> -->
-									<tr>
+									<!-- <tr>
 										<td class="text-center">배송 문의</td>
 										<td><a href="#" class="text-dark text-decoration-none">
 												<svg width="14" height="14" viewBox="0 0 24 24">
@@ -412,7 +517,7 @@ $(function() {
 										</a></td>
 										<td class="text-center text-body-secondary">2026.06.28</td>
 										<td class="text-center"><span class="badge bg-secondary">답변대기</span></td>
-									</tr>
+									</tr> -->
 								</tbody>
 							</table>
 

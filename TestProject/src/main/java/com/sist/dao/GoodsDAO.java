@@ -96,11 +96,11 @@ public class GoodsDAO {
 	AND goods_size = #{goods_size}
 	</select>
 	*/
-	public static int stockQuantityCheck(Map map) {
+	public static StockVO stockQuantityCheck(Map map) {
 		SqlSession session=ssf.openSession();
-		int quantity=session.selectOne("stockQuantityCheck", map);
+		StockVO vo=session.selectOne("stockQuantityCheck", map);
 		session.close();
-		return quantity;
+		return vo;
 	}
 		
 	 /*
@@ -132,6 +132,7 @@ public class GoodsDAO {
 	public static void cartUpdate(Map map) {
 		SqlSession session=ssf.openSession(true);
 		session.update("cartUpdate",map);
+		session.commit();
 		session.close();
 	}
 	 /*
@@ -144,8 +145,37 @@ public class GoodsDAO {
 	public static void cartInsert(Map map) {
 		SqlSession session=ssf.openSession(true);
 		session.insert("cartInsert",map);
+		session.commit();
 		session.close();
 	}
 	
-
+	/*
+	 <!-- 상품의 리뷰 목록 가져오기 -->
+	 <select id="goodsReviewList" resultType="ReviewVO" parameterType="int">
+	    SELECT review_no, subject, content, id, hit, TO_CHAR(created_at, 'yyyy-MM-dd') as dbday
+	    FROM review
+	    WHERE goods_no = #{goods_no}
+	    ORDER BY review_no DESC
+	</select>
+	 */
+	public static List<ReviewVO> goodsReviewList(int goods_no) {
+		SqlSession session=ssf.openSession();
+		List<ReviewVO> list=session.selectList("goodsReviewList", goods_no);
+		session.close();
+		return list;
+	}
+	/*
+	 *  <select id="goodsQnaList" resultType="QnaVO" parameterType="int">
+			SELECT qna_no, subject, content, id, type, status, TO_CHAR(created_at, 'yyyy-MM-dd') as dbday
+			FROM qna
+			WHERE goods_no = #{goods_no}
+			ORDER BY qna_no DESC
+		</select>
+	 */
+	public static List<QnaVO> goodsQnaList(int goods_no) {
+		SqlSession session=ssf.openSession();
+		List<QnaVO> list=session.selectList("goodsQnaList", goods_no);
+		session.close();
+		return list;
+	}
 }

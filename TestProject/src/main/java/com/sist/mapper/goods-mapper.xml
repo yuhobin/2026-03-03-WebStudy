@@ -14,7 +14,8 @@
 			CREATED_AT     NOT NULL DATE        -->
 	<select id="goodsListData" resultType="GoodsVO" parameterType="map">
 		SELECT goods_no, goods_code, goods_name, goods_price, goods_discount, poster_url, subposter_url, b.brand_name, hit,
-				(SELECT COUNT(*) FROM goods_like gl WHERE gl.goods_no=g.goods_no) as like_count
+				(SELECT COUNT(*) FROM goods_like gl WHERE gl.goods_no=g.goods_no) as like_count, 
+				(SELECT COUNT(*) FROM review r WHERE r.goods_no=g.goods_no) as review_count 
 		FROM goods g JOIN brand b
 		ON g.brand_no=b.brand_no
 		
@@ -60,7 +61,8 @@
 		SELECT goods_no, goods_name, goods_code, goods_price, 
 		       goods_discount, poster_url, subposter_url, hit,
 		       b.brand_name, c.category_name,
-		       (SELECT COUNT(*) FROM goods_like gl WHERE gl.goods_no=g.goods_no) as like_count 
+		       (SELECT COUNT(*) FROM goods_like gl WHERE gl.goods_no=g.goods_no) as like_count,
+		       (SELECT COUNT(*) FROM review r WHERE r.goods_no=g.goods_no) as review_count 
 		FROM goods g JOIN brand b 
 		ON g.brand_no = b.brand_no
 		JOIN category c 
@@ -93,9 +95,10 @@
 		</where>
 	</select>
 	
+	<!-- 장바구니 이동 -->
 	<!-- 1. 재고 있는지 확인 -->
-	<select id="stockQuantityCheck" resultType="int" parameterType="map">    
-	SELECT quantity, goods_size    
+	<select id="stockQuantityCheck" resultType="StockVO" parameterType="map">    
+	SELECT no, quantity, goods_size 
 	FROM stock     
 	WHERE goods_no = #{goods_no} 
 	AND goods_size = #{goods_size}
@@ -113,21 +116,33 @@
 	<!-- 3. 장바구니에 이미 있으면 수량만 추가  -->
 	<update id="cartUpdate" parameterType="map">   
 	UPDATE cart 
-	SET quantity = quantity + #{quantity}   
+	SET quantity = quantity + #{quantity}  , 
+		created_at = SYSDATE
 	WHERE id = #{id}       
 	AND stock_no = #{stock_no}       
 	AND sizes = #{sizes}
 	</update>
 
 	<!-- 4. 장바구니에 없으면 새로 담기 -->
-
 	<insert id="cartInsert" parameterType="map">   
-	INSERT INTO cart (cart_no, id, stock_no, sizes, quantity)    
-	VALUES (cart_no_seq.nextval, #{id}, #{stock_no}, #{sizes}, #{quantity})
+	INSERT INTO cart (cart_no, id, stock_no, sizes, quantity, created_at)    
+	VALUES (cart_no_seq.nextval, #{id}, #{stock_no}, #{sizes}, #{quantity}, SYSDATE)
 	</insert>
-
-		<!-- 
-			INSERT INTO cart (cart_no,id,stock_no,sizes,quantity)
-			VALUES (cart_no_seq.NEXTVAL,'user',1,230,1);
- 		-->
+	
+	<!-- 상품 리뷰 / 문의하기 글목록 화면 출력 -->
+	<!-- 상품의 리뷰 목록 출력 -->
+	<select id="goodsReviewList" resultType="ReviewVO" parameterType="int">
+	    SELECT review_no, subject, content, id, hit, TO_CHAR(created_at, 'yyyy-MM-dd') as dbday
+	    FROM review
+	    WHERE goods_no = #{goods_no}
+	    ORDER BY review_no DESC
+	</select>
+	 
+	 <!-- 상품 리뷰 목록 출력 -->
+	<select id="goodsQnaList" resultType="QnaVO" parameterType="int">
+		SELECT qna_no, subject, content, id, type, status, TO_CHAR(created_at, 'yyyy-MM-dd') as dbday
+		FROM qna
+		WHERE goods_no = #{goods_no}
+		ORDER BY qna_no DESC
+	</select>
 </mapper>

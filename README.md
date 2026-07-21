@@ -90,4 +90,4 @@
 | 프로젝트명 (기간) | 설명 및 담당 역할 | 사용 기술 | 링크 |
 | :--- | :--- | :--- | :--- |
 | **도서관리 시스템 (Kiosk)** <br> `26.04.20 - 26.04.30` | 자바 기반의 도서 대여/반납 키오스크 프로그램 <br> - **담당:** 로그인, 회원가입, 마이페이지 모듈 구현 <br> - **성과:** JDBC를 통한 DB 연동 및 Swing GUI 구현 | Java, Oracle SQL, JDBC, Swing | [보러가기](https://github.com/library-kiosk/2026-java-project) |
-| **신발 물류/재고 관리 프로젝트** <br> `26.06 - 26.07.15` | 프로젝트에 대한 간단한 설명과 본인이 맡은 역할 <br> - **담당:** 상품 목록 구현, 상품 상세보기 구현, 메인페이지 상품 전시 구현, ERD 및 테이블 제작 담당 | Java, Oracle SQL, JSP, MyBatis, JavaScript, Jquery, Vue, HTML5, CSS3  | [보러가기](링크주소) |
+| **신발 물류/재고 관리 프로젝트** <br> `26.06 - 26.07.15` | 프로젝트에 대한 간단한 설명과 본인이 맡은 역할 <br> - **담당:** 상품 목록 구현, 상품 상세보기 구현, 메인페이지 상품 전시 구현, ERD 및 테이블 제작 담당 | Java, Oracle SQL, JSP, MyBatis, JavaScript, Jquery, Vue, HTML5, CSS3  | [보러가기](https://github.com/SIST-SWMS/2026-web-project.git) |

@@ -116,6 +116,7 @@ $(function() {
 		    let size=selectedSizeBtn.text().trim(); 
 		    let qty=$('#qtyInput').val();
 
+		    location.href="checkout.do?goods_no="+gno+"&sizes="+size+"&quantity="+qty; /* http://localhost/SWMS/order/order.do?stock_no=41&quantity=1 */
 		    location.href="checkout.do?goods_no="+gno+"&sizes="+size+"&quantity="+qty;
 		});
 	});
@@ -155,19 +156,81 @@ $(function() {
 					<span class="badge bg-success mb-2">${vo.goods_discount }% 할인</span>
 					<h2 class="fw-bold">${vo.goods_name }</h2>
 					<div class="d-flex align-items-center gap-2 my-2">
-						<span class="d-flex"> <svg width="18" height="18"
-								class="text-warning">
-								<!-- 이부분은 나중에 리뷰 담당자와 논의 후 별점 유무 진행 -->
-								<use xlink:href="#star-solid"></use></svg> <svg width="18" height="18"
-								class="text-warning">
-								<use xlink:href="#star-solid"></use></svg> <svg width="18" height="18"S
-								class="text-warning">
-								<use xlink:href="#star-solid"></use></svg> <svg width="18" height="18"
-								class="text-warning">
-								<use xlink:href="#star-solid"></use></svg> <svg width="18" height="18"
-								class="text-warning">
-								<use xlink:href="#star-solid"></use></svg>
-						</span> <small class="text-body-secondary">리뷰 ${vo.review_count }개</small> <!-- 리뷰 개수 세서 표시 -->
+						<c:forEach var="rvo" items="${rList}">
+						<c:choose>
+					       		<c:when test="${rvo.hit==1}">
+									<span class="d-inline-flex"> <svg width="20" height="20"
+										class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg>
+									</span>
+								</c:when>
+								<c:when test="${rvo.hit==2}">
+									<span class="d-inline-flex"> <svg width="20" height="20"
+										class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg>
+									</span>
+								</c:when>
+								<c:when test="${rvo.hit==3}">
+									<span class="d-inline-flex"> <svg width="20" height="20"
+										class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg>
+									</span>
+								</c:when>
+								<c:when test="${rvo.hit==4}">
+									<span class="d-inline-flex"> <svg width="20" height="20"
+										class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-outline"></use></svg>
+									</span>
+								</c:when>
+								<c:when test="${rvo.hit==5}">
+									<span class="d-inline-flex"> <svg width="20" height="20"
+										class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg> <svg width="20"
+										height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg><svg width="20"
+										 height="20" class="text-warning">
+									<use xlink:href="#star-solid"></use></svg>
+									</span>
+								</c:when>
+					      	</c:choose>
+					      	</c:forEach>
+						<small class="text-body-secondary">리뷰 ${vo.review_count }개</small> <!-- 리뷰 개수 세서 표시 -->
 					</div>
 					
 					<div class="my-3">
@@ -216,7 +279,7 @@ $(function() {
    						</button>
    							
 						<!--바로구매 버튼으로 수정 -->
-						<button type="button" class="btn btn-dark btn-lg px-4" id="buyBtn" data-no="${vo.goods_no}">
+						<button type="button" class="btn btn-dark btn-lg px-4" id="buyBtn" data-no="${svo.stock_no}">
     						바로 구매
 						</button> 
 						<c:if test="${check==0}">
@@ -246,9 +309,6 @@ $(function() {
 			</div>
 
 			<!-- Tabs -->
-			<!-- ============================================= -->
-			<!--  연관상품 슬라이드 (같은 카테고리 좋아요순 15개)  -->
-			<!-- ============================================= -->
 			<div class="row mt-5">
 				<div class="col-12 text-center">
 					<h5 class="fw-bold mb-4 text-start">상품 상세 이미지</h5>
@@ -398,7 +458,8 @@ $(function() {
 					    <div class="d-flex justify-content-between align-items-start mb-2">
 					        <div>
 					            <h6 class="fw-bold mb-1">
-					                <a href="../review/detail.do?review_no=${rvo.review_no}" class="text-dark text-decoration-none">
+					                <%-- <a href="../review/detail.do?review_no=${rvo.review_no}" class="text-dark text-decoration-none"> --%>
+					                <a href="../mypage/reviewList.do?review_no=${rvo.review_no}" class="text-dark text-decoration-none">
 					                    ${rvo.subject}
 					                </a>
 					            </h6>
@@ -488,44 +549,88 @@ $(function() {
 			</div>
 			</div>
 						
+						<%-- 상품 문의 내역 리스트 --%>
 						<div class="tab-pane fade" id="qna">
-							<%-- 상품 문의 내역 리스트 --%>
-							<table class="table align-middle">
-								<thead>
-									<tr class="text-body-secondary">
-										<th class="text-center" style="width: 110px;">유형</th>
-										<th>제목</th>
-										<th class="text-center" style="width: 130px;">작성일</th>
-										<th class="text-center" style="width: 110px;">답변상태</th>
-									</tr>
-								</thead>
-								<tbody>
-									<%-- 문의 1건 = tr 하나. <c:forEach var="qna" items="${qnaList}"> 로 반복 --%>
-									<!-- <c:forEach var="qna" items="${qnaList}"> -->
-									<tr>
-										<td class="text-center">${qvo.type }</td>
-										<td><a href="#" class="text-dark text-decoration-none">${qvo.subject}</a></td>
-										<td class="text-center text-body-secondary">${qvo.dbday }</td>
-										<td class="text-center"><span class="badge bg-success">${qvo.status}</span></td>
-									</tr>
-									<!-- </c:forEach> -->
-									<!-- <tr>
-										<td class="text-center">배송 문의</td>
-										<td><a href="#" class="text-dark text-decoration-none">
-												<svg width="14" height="14" viewBox="0 0 24 24">
-												<use xlink:href="#lock"></use></svg> 비밀글입니다
-										</a></td>
-										<td class="text-center text-body-secondary">2026.06.28</td>
-										<td class="text-center"><span class="badge bg-secondary">답변대기</span></td>
-									</tr> -->
-								</tbody>
-							</table>
-
-							<%-- 상품문의 버튼 --%>
-							<div class="text-end mt-3">
-								<a href="../mypage/qna.do" class="btn btn-dark">상품문의</a>
-							</div>
-						</div>
+					    <table class="table align-middle">
+					        <thead>
+					            <tr class="text-body-secondary">
+					                <th class="text-center" style="width: 110px;">유형</th>
+					                <th>제목</th>
+					                <th class="text-center" style="width: 130px;">작성일</th>
+					                <th class="text-center" style="width: 110px;">답변상태</th>
+					            </tr>
+					        </thead>
+					        <tbody>
+					            <%-- 1. 문의글이 하나도 없을 경우 --%>
+					            <c:if test="${empty qList}">
+					                <tr>
+					                    <td colspan="4" class="text-center py-4 text-body-secondary">등록된 상품 문의가 없습니다.</td>
+					                </tr>
+					            </c:if>
+					
+					            <%-- 2. 문의글 목록 반복 출력 --%>
+					            <c:forEach var="qvo" items="${qList}">
+					                <tr>
+					                    <td class="text-center">${qvo.type}</td>
+					                    
+					                    <td>
+					                        <c:choose>
+					                            <%-- 비밀글인 경우 --%>
+					                            <c:when test="${qvo.is_secret == '비밀글'}">
+					                                
+					                                <%-- 작성자 본인이거나 관리자인 경우 --%>
+					                                <c:choose>
+					                                    <c:when test="${sessionScope.id == qvo.id || sessionScope.id == 'admin'}">
+					                                        <%-- <a href="../qna/detail.do?qna_no=${qvo.qna_no}" class="text-dark text-decoration-none"> --%>
+					                                         <a href="../mypage/qnaList.do?qna_no=${qvo.qna_no}" class="text-dark text-decoration-none">
+					                                            <svg width="14" height="14" viewBox="0 0 24 24"><use xlink:href="#lock"></use></svg>
+					                                            ${qvo.subject}
+					                                        </a>
+					                                    </c:when>
+					                                    
+					                                    <%-- 권한이 없는 다른 사용자인 경우 --%>
+					                                    <c:otherwise>
+					                                        <span class="text-body-secondary" style="cursor: not-allowed;">
+					                                            <svg width="14" height="14" viewBox="0 0 24 24"><use xlink:href="#lock"></use></svg>
+					                                            비밀글입니다.
+					                                        </span>
+					                                    </c:otherwise>
+					                                </c:choose>
+					                                
+					                            </c:when>
+					                            
+					                            <%-- 공개글인 경우 --%>
+					                            <c:otherwise>
+					                                <%-- <a href="../qna/detail.do?qna_no=${qvo.qna_no}" class="text-dark text-decoration-none"> --%>
+					                                <a href="../mypage/qnaList.do?qna_no=${qvo.qna_no}" class="text-dark text-decoration-none">
+					                                    ${qvo.subject}
+					                                </a>
+					                            </c:otherwise>
+					                        </c:choose>
+					                    </td>              
+					                    
+					                    <td class="text-center text-body-secondary">${qvo.dbday}</td>
+					                    <!-- 답변 상태 -->
+					                    <td class="text-center">
+					                        <c:choose>
+					                            <c:when test="${qvo.status == '답변완료'}">
+					                                <span class="badge bg-success">답변완료</span>
+					                            </c:when>
+					                            <c:otherwise>
+					                                <span class="badge bg-secondary">${qvo.status}</span>
+					                            </c:otherwise>
+					                        </c:choose>
+					                    </td>
+					                </tr>
+					            </c:forEach>
+					        </tbody>
+					    </table>
+					
+					    <%-- 상품문의 버튼 --%>
+					    <div class="text-end mt-3">
+					        <a href="../mypage/qna.do" class="btn btn-dark">상품문의</a>
+					    </div>
+					</div>
 					</div>
 				</div>
 			</div>

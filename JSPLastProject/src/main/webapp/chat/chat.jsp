@@ -66,7 +66,7 @@ window.onload=function(){
 }
 function connection()
 {
-	websocket=new WebSocket("ws://3.34.46.46/JSPLastProject/chat") 
+	websocket=new WebSocket("ws://(IP 입력)/JSPLastProject/chat") 
 	websocket.onopen=onOpen
 	websocket.onmessage=onMessage
 	websocket.onclose=onClose

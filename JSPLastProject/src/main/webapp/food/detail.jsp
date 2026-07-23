@@ -284,7 +284,7 @@ $(function(){
                           <tr>
                             <td>
                               <div id="map" style="width:100%;height:350px;"></div>
-                              <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cc3f81d004109e8449e421a88c379350&libraries=services"></script>
+                              <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=(카카오 키 입력)&libraries=services"></script>
 								<script>
 								var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 								    mapOption = {
